@@ -17,3 +17,15 @@ Milestone # 3 :
 
 - Server.js is added.
 - mongodb is connected
+
+Milestone # 4 :
+
+
+
+Milestone # 5 :
+
+
+
+Milestone # 6 :
+
+
