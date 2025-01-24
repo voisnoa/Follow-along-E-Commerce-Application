@@ -11,3 +11,9 @@ Milestone # 2 :
 - Separate folders for frontend and backend.
 - A functional Login Page in the frontend.
 - Setup backend.
+
+
+Milestone # 3 :
+
+- Server.js is added.
+- mongodb is connected
