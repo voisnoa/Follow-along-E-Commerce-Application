@@ -1,8 +1,21 @@
 const mongoose=require('mongoose')
-const userSchema=mongoose.Schema({
-    name:String,
-    email:String,
-    password:String,
+
+const userSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        required
+    },
+    email:{
+        type:String,
+        required:true,
+        unique
+    },
+    password:{
+        type:String,
+        required:true,
+        min:8,
+        max:16
+    },
     age:Number,
 
 

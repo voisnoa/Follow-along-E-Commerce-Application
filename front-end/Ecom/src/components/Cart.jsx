@@ -1,88 +1,86 @@
-import { useNavigate } from "react-router-dom";
-import productData from "./data.json";
-import Cart from "./Cart";
 
-function Home() {
-    const navigate = useNavigate();
+import PropTypes from 'prop-types';
 
-    const navBarStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-        backgroundColor: "#007bff",
-        color: "white",
-        position: "sticky",
-        top: "0",
-        width: "100%",
+const Cart = ({ product }) => {
+    const cartStyle = {
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        padding: "15px",
+        backgroundColor: "#fff",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-        boxSizing: "border-box",
-        zIndex: 10,
-    };
-
-    const logoStyle = {
-        fontSize: "24px",
-        fontWeight: "bold",
-        cursor: "pointer",
-    };
-
-    const linkContainerStyle = {
         display: "flex",
-        gap: "20px",
+        flexDirection: "column",
+        justifyContent: "space-between",
     };
 
-    const linkStyle = {
-        color: "white",
-        textDecoration: "none",
-        cursor: "pointer",
+    const imgStyle = {
+        width: "100%",
+        height: "200px",
+        objectFit: "cover",
+        borderRadius: "5px",
+        marginBottom: "10px",
+    };
+
+    const h3Style = {
         fontSize: "16px",
         fontWeight: "bold",
+        color: "#333",
+        margin: "10px 0",
     };
 
-    const containerStyle = {
+    const pStyle = {
+        fontSize: "14px",
+        color: "#555",
+        marginBottom: "10px",
+    };
+
+    const priceStyle = {
+        fontSize: "18px",
+        color: "#e60000",
+        fontWeight: "bold",
+        marginBottom: "10px",
+    };
+
+    const buttonContainerStyle = {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "150px",
-        boxSizing: "border-box",
-        padding: "20px",
-        backgroundColor: "#f8f9fa",
-        textAlign: "center",
+        justifyContent: "space-between",
+        gap: "10px",
+        marginTop: "15px",
     };
 
-    const cartStyle = {
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", // Responsive layout
-        gap: "30px",
-        padding: "40px",
-        backgroundColor: "#f1f1f1",
+    const buttonStyle = {
+        flex: "1",
+        padding: "8px",
+        fontSize: "14px",
+        color: "#333",
+        border: "1px solid #ddd",
+        borderRadius: "5px",
+        backgroundColor: "white",
+        cursor: "pointer",
     };
 
     return (
-        <div>
-            <nav style={navBarStyle}>
-                <div style={logoStyle} onClick={() => navigate("/")}>
-                    E-Commerce
-                </div>
-                <div style={linkContainerStyle}>
-                    <span style={linkStyle} onClick={() => navigate("/signup")}>
-                        Sign Up
-                    </span>
-                    <span style={linkStyle} onClick={() => navigate("/login")}>
-                        Login
-                    </span>
-                </div>
-            </nav>
-            <div style={containerStyle}>
-                <h1>Welcome to E-Commerce</h1>
-            </div>
-            <div style={cartStyle}>
-                {productData?.map((product) => (
-                    <Cart key={product.id} product={product}></Cart>
-                ))}
+        <div className="cart" style={cartStyle}>
+            <img src={product.imageUrl} alt={product.name} style={imgStyle} />
+            <h3 style={h3Style}>{product.name}</h3>
+            <p style={pStyle}>{product.description}</p>
+            <p style={priceStyle}>₹{product.price}</p>
+            <div style={buttonContainerStyle}>
+                <button style={buttonStyle}>Add to Cart</button>
+                <button style={buttonStyle}>Buy Now</button>
+                <button style={buttonStyle}>Wishlist</button>
             </div>
         </div>
     );
-}
+};
 
-export default Home;
+Cart.propTypes = {
+    product: PropTypes.shape({
+        imageUrl: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        price: PropTypes.number.isRequired,
+    }).isRequired,
+};
+
+export default Cart;

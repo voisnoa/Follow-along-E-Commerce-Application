@@ -5,6 +5,8 @@ import Cart from "./Cart";
 function Home() {
     const navigate = useNavigate();
 
+    console.log(productData); // Add this line to check if productData is loaded
+
     const navBarStyle = {
         display: "flex",
         justifyContent: "space-between",
