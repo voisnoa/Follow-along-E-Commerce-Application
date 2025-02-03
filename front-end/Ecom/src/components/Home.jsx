@@ -1,8 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import productData from "./data.json";
 import Cart from "./Cart";
+import { useEffect } from "react";
 
 function Home() {
+
+    let [productDataa, setProductData] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/product")
+            .then((res) => {
+                return res.json();
+            })
+            .then((res) => {
+                console.log(res);
+                setProductData(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+
     const navigate = useNavigate();
 
     console.log(productData); // Add this line to check if productData is loaded

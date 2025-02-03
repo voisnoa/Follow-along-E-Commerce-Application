@@ -17,6 +17,10 @@ Core concepts covered Overview of the MERN stack :- The MERN stack is a popular 
 * Pushed code to the GitHub repository.
 * Set up separate folders for frontend and backend.
 * Developed a functional Login Page for the frontend.
+* Set up a React app for the frontend and a Node.js server for the backend.
+* Configure CSS for styling.
+* Added optional extensions for improving development efficiency.
+* Built a functional and styled Login Page for the frontend.
 
 ### Milestone 3: Project Setup & Foundation
 
@@ -75,3 +79,27 @@ Core concepts covered Overview of the MERN stack :- The MERN stack is a popular 
 
 3. **Why Validation?**
    - Ensures only valid data is saved, keeping the database accurate.
+
+### Milestone 11: Data Fetching and Display
+
+This milestone focuses on fetching product data from the backend and dynamically displaying it on the frontend using product cards.
+
+**Key Objectives**
+
+* Implement a backend endpoint to retrieve all product data from MongoDB and send it to the frontend.
+
+* Create a frontend function to fetch the product data from the endpoint.
+
+* Dynamically render the retrieved product data using the existing product card component.
+
+### Milestone 12: My product Page 
+
+This milestone focuses on creating a "my Products" page that displays only the product added by the logged-in user (identified by their email).
+
+**Key Objectives** 
+
+* Implement a backend endpoint that retreives products from MongoDB, filtering by the user's email address.
+
+* Create a frontend function to fetch the filtered product from the endpoint.
+
+* Dynamically render the retrieved product data on the "My Products" page using the existing product card component.
