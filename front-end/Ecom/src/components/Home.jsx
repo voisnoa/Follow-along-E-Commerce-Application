@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import productData from "./data.json";
 import Cart from "./Cart";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 
 function Home() {
 
@@ -98,7 +98,7 @@ function Home() {
                 <h1>Welcome to E-Commerce</h1>
             </div>
             <div style={cartStyle}>
-                {productData?.map((product) => (
+                {productDataa?.map((product) => (
                     <Cart key={product.id} product={product}></Cart>
                 ))}
             </div>
