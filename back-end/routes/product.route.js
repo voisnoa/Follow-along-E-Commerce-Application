@@ -16,6 +16,17 @@ productRouter.get("/",async (req,res)=>{
   }
 });   
 
+productRouter.get("/:id",async (req,res)=>{
+  let id=req.params.id;
+  try{
+    const product=await productModel.find(id);
+    res.send({"message":"Successfully fetched the product",data:product});
+  }catch(error){
+    console.log(error);
+    res.send({"error-message":error});
+  }
+}); 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, '././uploads')
@@ -56,6 +67,20 @@ productRouter.post("/create",upload.array('productImage', 12),async(req,res)=>{
     }
 
 });
+
+productRouter.delete("/product/:id", async(req,res)=>{
+  let id = req.params.id
+
+  try{
+    let deleteProduct = await productModel.findByIdAndDelete(id);
+    if(!deleteProduct){
+      res.status(404).json({"Message":"Product Not Found"})
+    }
+    res.status(200).json({"Message":"Product successfully deleted"})
+  }catch(error){
+    res.status(500).json({ "error": error.message });
+  }
+})
 
 
 

@@ -36,6 +36,7 @@ app.post("/create", async (req, res) => {
 });
 
 const multer = require('multer');
+const { productRouter } = require('./routes/product.route');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads/'); // Save files in the uploads folder
@@ -114,6 +115,8 @@ app.post("/login",async(req,res)=>{
         res.json({"Message":"Something went wrong!"})
     }
 })
+
+app.use("/product",productRouter)
 
 app.listen(process.env.PORT, async () => {
     try {

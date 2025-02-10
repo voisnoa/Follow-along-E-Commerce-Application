@@ -3,12 +3,12 @@ const mongoose=require('mongoose')
 const userSchema=new mongoose.Schema({
     name:{
         type:String,
-        required
+        required:true
     },
     email:{
         type:String,
         required:true,
-        unique
+        unique:true
     },
     password:{
         type:String,

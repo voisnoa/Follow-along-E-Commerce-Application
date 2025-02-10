@@ -56,6 +56,7 @@ Core concepts covered Overview of the MERN stack :- The MERN stack is a popular 
 ### Milestone 8: Product Card & Homepage Layout
 
 * Created a reusable Card Component with props for product details.
+
 * Designed the Homepage layout using a grid or flexbox to display multiple product cards.
 
 ### Milestone 9: Product Form Creation
@@ -103,3 +104,24 @@ This milestone focuses on creating a "my Products" page that displays only the p
 * Create a frontend function to fetch the filtered product from the endpoint.
 
 * Dynamically render the retrieved product data on the "My Products" page using the existing product card component.
+
+### Milestone 13: 
+
+This milestone focuses on adding the ability to edit uploaded products, allowing users to update product details directly from the Products page.
+
+**Key Objective**
+
+* Add a edit button on each product card on the product page.
+
+* implement a backend endpoint to update product details in mongoDB.
+
+* Ensure changes are reflected on the front end.
+
+
+### Milestone 14: 
+
+Implemented product deletion: backend endpoint to delete products by ID and frontend "Delete" button functionality.
+
+**Key Objectives**
+
+* 

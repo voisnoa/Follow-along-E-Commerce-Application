@@ -1,5 +1,6 @@
 
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ product }) => {
     const cartStyle = {
@@ -59,15 +60,22 @@ const Cart = ({ product }) => {
         cursor: "pointer",
     };
 
+    const navigate = useNavigate();
+
+    // console.log('p',product)
+    const handleEdit = () => {
+       navigate(`/editproductForm/${product._id}`);
+    };
+
     return (
         <div className="cart" style={cartStyle}>
-            <img src={product.imageUrl} alt={product.name} style={imgStyle} />
-            <h3 style={h3Style}>{product.name}</h3>
-            <p style={pStyle}>{product.description}</p>
-            <p style={priceStyle}>₹{product.price}</p>
+            <img src={product.imageUrl} alt={product.productName} style={imgStyle} />
+            <h3 style={h3Style}>{product.productName}</h3>
+            <p style={pStyle}>{product.productDescription}</p>
+            <p style={priceStyle}>{product.productPrice}</p>
             <div style={buttonContainerStyle}>
-                <button style={buttonStyle}>Add to Cart</button>
-                <button style={buttonStyle}>Buy Now</button>
+                <button style={buttonStyle} onClick={handleEdit}>Edit Product</button>
+                <button style={buttonStyle}>Delete Product</button>
                 <button style={buttonStyle}>Wishlist</button>
             </div>
         </div>
