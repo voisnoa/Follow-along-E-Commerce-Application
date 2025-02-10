@@ -125,3 +125,13 @@ Implemented product deletion: backend endpoint to delete products by ID and fron
 **Key Objectives**
 
 * 
+
+### Milestone 15: 
+
+This milestone focuses on creating a reusable navigation bar, ensuring seamless navigation across different pages in the application.
+
+* Create a Navbar Component: Develop a separate Nav.jsx component.
+
+* Integrate Navbar Across Pages: Use the Nav component in the main layout for consistent navigation.
+
+* Improve User Experience: Enhance the UI with styling to make the navbar modern and easy to use.
