@@ -102,7 +102,7 @@ app.post("/login",async(req,res)=>{
             let hashedPassword=user[0].password;
             bcrypt.compare(password,hashedPassword,function(err,result){
                 if(result){
-                    let token = jwt.sign({"user ID":user[0]._id},process.env.SECRET_KEY)
+                    let token = jwt.sign({"user ID":user[0]._id,"email":user[0].email},process.env.SECRET_KEY)
                     res.send({"msg":"Login Successfull","token":token})
                 }else{
                     res.send({"msg":"Invalid Password"})
@@ -117,6 +117,8 @@ app.post("/login",async(req,res)=>{
 })
 
 app.use("/product",productRouter)
+
+app.use("/cart", cartRouter)
 
 app.listen(process.env.PORT, async () => {
     try {

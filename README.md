@@ -130,8 +130,20 @@ Implemented product deletion: backend endpoint to delete products by ID and fron
 
 This milestone focuses on creating a reusable navigation bar, ensuring seamless navigation across different pages in the application.
 
+**Key Objectives**
+
 * Create a Navbar Component: Develop a separate Nav.jsx component.
 
 * Integrate Navbar Across Pages: Use the Nav component in the main layout for consistent navigation.
 
 * Improve User Experience: Enhance the UI with styling to make the navbar modern and easy to use.
+
+### Milestone 17 :
+
+THis milestone is to write the cart schema to store products and to create an endpoint to store receive and store product details in cart.
+
+**Key Objectives**
+
+* Created a schema model for cart products.
+
+* Implemented an endpoint for store recieve and storing product details in a cart 
