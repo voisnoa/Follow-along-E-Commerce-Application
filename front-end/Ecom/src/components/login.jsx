@@ -6,6 +6,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         console.log("Username:", username);
         console.log("Password:", password);
     };
@@ -59,7 +60,7 @@ const Login = () => {
         fontSize: "24px",
         fontWeight: "bold",
         color: "#333",
-    };
+    }
 
     return (
         <div style={containerStyle}>

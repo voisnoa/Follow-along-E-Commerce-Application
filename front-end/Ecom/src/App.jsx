@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import ProductForm from "./components/ProductForm";
 import EditProduct from "./components/EditProduct";
 import Nav from "./components/Nav";
+import Profile from "./components/Profile";
+import Address from "./components/AddressForm";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/productForm" element={<ProductForm />}/>
         <Route path="/editproductForm/:id" element={<EditProduct />}/>
+        <Route path="/profile" element={<Profile />}/>
+        {/* <Route path="/profile/adressform" element={<Address />}/> */}
       </Routes>   
     </BrowserRouter>
     </>

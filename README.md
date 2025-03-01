@@ -124,7 +124,9 @@ Implemented product deletion: backend endpoint to delete products by ID and fron
 
 **Key Objectives**
 
-* 
+* Added a delete button in the front and implemented its functionality 
+
+* Implemented an endpoint to delete the products by their ID.
 
 ### Milestone 15: 
 
@@ -140,10 +142,18 @@ This milestone focuses on creating a reusable navigation bar, ensuring seamless 
 
 ### Milestone 17 :
 
-THis milestone is to write the cart schema to store products and to create an endpoint to store receive and store product details in cart.
+This milestone is to write the cart schema to store products and to create an endpoint to store receive and store product details in cart.
 
 **Key Objectives**
 
 * Created a schema model for cart products.
 
 * Implemented an endpoint for store recieve and storing product details in a cart 
+
+### Milestone 18 :
+
+
+### Milestone 20:
+
+
+

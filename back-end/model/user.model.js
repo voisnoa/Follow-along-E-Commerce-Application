@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const { type } = require('os')
 
 const userSchema=new mongoose.Schema({
     name:{
@@ -16,9 +17,12 @@ const userSchema=new mongoose.Schema({
         min:8,
         max:16
     },
-    age:Number,
+    address:{
+        type:String,
+        default:""
+    }
 
-
+    // age:Number,
 })
 const userModel=mongoose.model("usercollection",userSchema)
 module.exports={

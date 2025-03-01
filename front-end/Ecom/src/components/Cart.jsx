@@ -1,5 +1,6 @@
 
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ product }) => {
@@ -64,8 +65,27 @@ const Cart = ({ product }) => {
 
     // console.log('p',product)
     const handleEdit = () => {
-       navigate(`/editproductForm/${product._id}`);
+        navigate(`/editproductForm/${product._id}`);
     };
+
+    //Milestone 19 code
+
+    useEffect(() => {
+        fetch("https://localhost:5000/cart"),{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("Token")}`,
+            }
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                console.log(res);
+            })
+        }
+    }, []);
+
+    //Milestone 19 code ends 
 
     return (
         <div className="cart" style={cartStyle}>

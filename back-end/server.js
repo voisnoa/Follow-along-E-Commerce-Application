@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const { userModel } = require('./model/user.model');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+import authenticate from './middleware/authentication';
+import userRouter from './routes/user.route';
 
 require('dotenv').config();
 const app = express();
@@ -117,7 +119,8 @@ app.post("/login",async(req,res)=>{
 })
 
 app.use("/product",productRouter)
-
+app.use(authenticate)
+app.use("/user",userRouter)
 app.use("/cart", cartRouter)
 
 app.listen(process.env.PORT, async () => {
