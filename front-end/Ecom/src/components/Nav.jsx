@@ -32,6 +32,8 @@ const Nav = () => {
                 <li><Link to="/my-products" style={linkStyle}>My Products</Link></li>
                 <li><Link to="/productForm" style={linkStyle}>Add Product</Link></li>
                 <li><Link to="/cart" style={linkStyle}>Cart</Link></li>
+                <li><Link to="/profile" style={linkStyle}>Profile</Link></li>
+                <li><Link to="/order" style={linkStyle}>My Orders</Link></li>
             </ul>
         </nav>
     );
