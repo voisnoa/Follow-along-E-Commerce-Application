@@ -4,8 +4,11 @@ const bcrypt = require('bcrypt');
 const { userModel } = require('./model/user.model');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-import authenticate from './middleware/authentication';
-import userRouter from './routes/user.route';
+const authenticate = require('./middleware/authentication');
+const { productRouter } = require('./routes/product.route');
+const userRouter = require('./routes/user.route');
+const OrderRouter = require('./routes/order.route');
+const cartRouter = require('./routes/cart.route');
 
 require('dotenv').config();
 const app = express();
@@ -14,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let connection = mongoose.connect(process.env.mongoURL);
+let connection = mongoose.connect(process.env.mongoURL)
 
 app.get("/ping", (req, res) => {
     res.send("pong");
@@ -38,7 +41,7 @@ app.post("/create", async (req, res) => {
 });
 
 const multer = require('multer');
-const { productRouter } = require('./routes/product.route');
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads/'); // Save files in the uploads folder
@@ -119,6 +122,7 @@ app.post("/login",async(req,res)=>{
 })
 
 app.use("/product",productRouter)
+app.use("/orders",OrderRouter)
 app.use(authenticate)
 app.use("/user",userRouter)
 app.use("/cart", cartRouter)

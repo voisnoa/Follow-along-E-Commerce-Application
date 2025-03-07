@@ -150,10 +150,42 @@ This milestone is to write the cart schema to store products and to create an en
 
 * Implemented an endpoint for store recieve and storing product details in a cart 
 
-### Milestone 18 :
+## Milestone 18: Fetch Cart Products
 
+### Learning Goals  
+- Create an endpoint to retrieve products from the user's cart.  
 
-### Milestone 20:
+### Steps  
+1. Build a backend endpoint to fetch cart products using the user’s email.  
+2. Integrate with the cart page.  
+
+---
+
+## Milestone 19: Cart Page UI & Quantity Update  
+
+### Learning Goals  
+- Create a frontend cart page to display products.  
+- Add + and - buttons to adjust quantity.  
+- Write an endpoint to update quantity.  
+
+### Steps  
+1. Design the cart UI and display cart products.  
+2. Implement + and - buttons for quantity control.  
+3. Write an endpoint to update product quantity in the cart.  
+
+---
+
+## Milestone 20: Profile Page  
+
+### Learning Goals  
+- Build a backend endpoint to fetch user data.  
+- Create a frontend profile page to display user info.  
+
+### Steps  
+1. Develop a backend endpoint to send user data.  
+2. Create a profile page displaying photo, name, and email.  
+3. Show address section with an "Add Address" button.  
+4. If no address is found, display "No address found."  
 
 
 

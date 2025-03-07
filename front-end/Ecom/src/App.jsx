@@ -6,7 +6,8 @@ import ProductForm from "./components/ProductForm";
 import EditProduct from "./components/EditProduct";
 import Nav from "./components/Nav";
 import Profile from "./components/Profile";
-import Address from "./components/AddressForm";
+// import Address from "./components/AddressForm";
+import Order from "./components/MyOrders";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/editproductForm/:id" element={<EditProduct />}/>
         <Route path="/profile" element={<Profile />}/>
         {/* <Route path="/profile/adressform" element={<Address />}/> */}
+        <Route path="/order" element={<Order/>}/>
       </Routes>   
     </BrowserRouter>
     </>
