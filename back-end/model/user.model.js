@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const { type } = require('os')
+
 
 const userSchema=new mongoose.Schema({
     name:{
@@ -21,10 +21,8 @@ const userSchema=new mongoose.Schema({
         type:String,
         default:""
     }
-
-    // age:Number,
 })
-const userModel=mongoose.model("usercollection",userSchema)
-module.exports={
-    userModel
-}
+
+const User =mongoose.model("usercollection",userSchema)
+
+module.exports= User

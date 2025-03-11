@@ -1,20 +1,16 @@
 const express = require('express');
-const { userModel } = require('../model/user.model');
+
+const { createUser, getUsers, loginUser, getUserById , getUserByEmail} = require('../controllers/usercontroller');
 
 let userRouter = express.Router();
 
-userRouter.get('/profile', async(req, res) => {
-    const {userID} = req.body.userID;
-    try {
-        const user = await userModel.findById(userID);
-        if(!user) {
-            return res.status(404).send({message: "User not found"});
-        }
-        res.json(user)
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({message: "Internal server error"});
-    }
-}) ;
+
+userRouter.post('/signup', createUser);
+userRouter.get('/users', getUsers);
+userRouter.post('/login', loginUser);
+userRouter.get('/:id', getUserById);
+userRouter.get('/', getUserByEmail);
+
+
 
 module.exports = userRouter;

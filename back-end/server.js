@@ -4,13 +4,14 @@ const bcrypt = require('bcrypt');
 const { userModel } = require('./model/user.model');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const authenticate = require('./middleware/authentication');
 const { productRouter } = require('./routes/product.route');
+const middleware = require('./middleware/authentication');
+// const {productRouter} = require('./routes/product.route');
 const userRouter = require('./routes/user.route');
 const OrderRouter = require('./routes/order.route');
 const cartRouter = require('./routes/cart.route');
 
-require('dotenv').config();
+require('dotenv').config();  
 const app = express();
 
 
@@ -41,6 +42,8 @@ app.post("/create", async (req, res) => {
 });
 
 const multer = require('multer');
+const authentication = require('./middleware/authentication');
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -73,59 +76,11 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
     }
 });
 
+app.use("/product",authentication, productRouter)
+app.use("/orders",authentication,OrderRouter)
 
-
-app.post("/signup" , async (req,res) => {
-    console.log(req.body)
-    const {name,email,password}=req.body
-    const userPresent=await userModel.findOne({email})
-    if(userPresent?.email){
-        res.send("Try loggin in ,already exist")
-    }else{
-        try {
-            bcrypt.hash(password,4,async function (err,hash){
-                const user = new userModel({name,email,password:hash})
-                await user.save()
-                res.send("Sign up successfull")
-            })
-        } catch (error) {
-            console.log(err)
-            res.send("Something went wrong,pls try again later")
-        }
-    }
-})
-
-
-
-app.post("/login",async(req,res)=>{
-    const {email,password}=req.body;
-
-    try {
-        let user = await userModel.find({email});
-
-        if(user.length>0){
-            let hashedPassword=user[0].password;
-            bcrypt.compare(password,hashedPassword,function(err,result){
-                if(result){
-                    let token = jwt.sign({"user ID":user[0]._id,"email":user[0].email},process.env.SECRET_KEY)
-                    res.send({"msg":"Login Successfull","token":token})
-                }else{
-                    res.send({"msg":"Invalid Password"})
-                }
-            })
-        }else{
-            res.send({"msg":"Invalid Email"})
-        }
-    } catch (error) {
-        res.json({"Message":"Something went wrong!"})
-    }
-})
-
-app.use("/product",productRouter)
-app.use("/orders",OrderRouter)
-app.use(authenticate)
 app.use("/user",userRouter)
-app.use("/cart", cartRouter)
+app.use("/cart",authentication, cartRouter)
 
 app.listen(process.env.PORT, async () => {
     try {

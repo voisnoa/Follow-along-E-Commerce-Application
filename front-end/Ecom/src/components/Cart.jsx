@@ -1,114 +1,100 @@
+import { useState, useEffect } from "react";
 
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+function CartPage() {
+  const [cartItems, setCartItems] = useState([]);
 
-const Cart = ({ product }) => {
-    const cartStyle = {
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        padding: "15px",
-        backgroundColor: "#fff",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-    };
+  useEffect(() => {
+    const fetchCart = async () => {
+      const userEmail = localStorage.getItem("userEmail");
 
-    const imgStyle = {
-        width: "100%",
-        height: "200px",
-        objectFit: "cover",
-        borderRadius: "5px",
-        marginBottom: "10px",
-    };
+      if (!userEmail) {
+        console.error("No userEmail found in localStorage");
+        return;
+      }
 
-    const h3Style = {
-        fontSize: "16px",
-        fontWeight: "bold",
-        color: "#333",
-        margin: "10px 0",
-    };
+      try {
+        const res = await fetch(
+          `http://localhost:7878/getCart?userEmail=${userEmail}`
+        );
 
-    const pStyle = {
-        fontSize: "14px",
-        color: "#555",
-        marginBottom: "10px",
-    };
-
-    const priceStyle = {
-        fontSize: "18px",
-        color: "#e60000",
-        fontWeight: "bold",
-        marginBottom: "10px",
-    };
-
-    const buttonContainerStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "10px",
-        marginTop: "15px",
-    };
-
-    const buttonStyle = {
-        flex: "1",
-        padding: "8px",
-        fontSize: "14px",
-        color: "#333",
-        border: "1px solid #ddd",
-        borderRadius: "5px",
-        backgroundColor: "white",
-        cursor: "pointer",
-    };
-
-    const navigate = useNavigate();
-
-    // console.log('p',product)
-    const handleEdit = () => {
-        navigate(`/editproductForm/${product._id}`);
-    };
-
-    //Milestone 19 code
-
-    useEffect(() => {
-        fetch("https://localhost:5000/cart"),{
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("Token")}`,
-            }
-            .then((res) => {
-                return res.json();
-            }).then((res) => {
-                console.log(res);
-            })
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
         }
-    }, []);
 
-    //Milestone 19 code ends 
+        const data = await res.json();
+        setCartItems(data.cart || []);
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
 
-    return (
-        <div className="cart" style={cartStyle}>
-            <img src={product.imageUrl} alt={product.productName} style={imgStyle} />
-            <h3 style={h3Style}>{product.productName}</h3>
-            <p style={pStyle}>{product.productDescription}</p>
-            <p style={priceStyle}>{product.productPrice}</p>
-            <div style={buttonContainerStyle}>
-                <button style={buttonStyle} onClick={handleEdit}>Edit Product</button>
-                <button style={buttonStyle}>Delete Product</button>
-                <button style={buttonStyle}>Wishlist</button>
-            </div>
-        </div>
-    );
-};
+    fetchCart();
+  }, []);
 
-Cart.propTypes = {
-    product: PropTypes.shape({
-        imageUrl: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string,
-        price: PropTypes.number.isRequired,
-    }).isRequired,
-};
+  const updateQuantity = async (productId, newQuantity) => {
+    if (newQuantity < 1) return;
 
-export default Cart;
+    try {
+      const res = await fetch("http://localhost:7878/updateCart", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userEmail: localStorage.getItem("userEmail"), productId, quantity: newQuantity }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update quantity");
+      }
+
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.productId._id === productId ? { ...item, quantity: newQuantity } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
+  const removeFromCart = async (productId) => {
+    try {
+      const res = await fetch("http://localhost:7878/removeFromCart", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userEmail: localStorage.getItem("userEmail"), productId }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to remove item");
+      }
+
+      setCartItems((prevItems) => prevItems.filter((item) => item.productId._id !== productId));
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+  };
+
+  return (
+    <div className="mt-24 px-4">
+      <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
+      {cartItems.length > 0 ? (
+        <ul className="space-y-4">
+          {cartItems.map((item) => (
+            <li key={item.productId._id} className="border-b pb-2 flex items-center justify-between">
+              <span className="font-semibold">{item.productId.name}</span>
+              <div className="flex items-center">
+                <button onClick={() => updateQuantity(item.productId._id, item.quantity - 1)} className="px-2 py-1 bg-gray-300 rounded">-</button>
+                <span className="mx-2">{item.quantity}</span>
+                <button onClick={() => updateQuantity(item.productId._id, item.quantity + 1)} className="px-2 py-1 bg-gray-300 rounded">+</button>
+                <button onClick={() => removeFromCart(item.productId._id)} className="ml-4 px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-500">Cart is empty</p>
+      )}
+    </div>
+  );
+}
+
+export default CartPage;

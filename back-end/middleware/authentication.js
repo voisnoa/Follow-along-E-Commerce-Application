@@ -14,15 +14,20 @@ const authentication = (req, res, next) => {
         if(decoded){
             const emailID = decoded.email;
             req.body.email = emailID;
+            const userID = decoded.userID;
+            req.body.userID = userID;
 
-
-        }const userID = decoded.userID;
-        console.log(userID,emailID);
-
-        req.body.userID = userID;
-        next();
+            console.log(userID,emailID);
+            next();
+        }
+        else{
+            res.status(401).send("Invalid Token");
+        }
+        
     }else{
-        res.send("Login please");
+        res.status(401).send("Login please");
     }
 }
+
+module.exports = authentication;
     
