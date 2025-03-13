@@ -1,176 +1,149 @@
+
+
 import { useState } from "react";
 
 const ProductForm = () => {
-    const [formData, setFormData] = useState({
-        productName: "",
-        productDescription: "",
-        productPrice: "",
-        productImage: null, 
+  const [productData, setProductData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    images: [],
+    userEmail: "", // Added userEmail field
+  });
+
+  const handleInputChange = (e) => {
+    setProductData({ ...productData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    setProductData({ ...productData, images: Array.from(e.target.files) });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("description", productData.description);
+    formData.append("price", productData.price);
+    formData.append("category", productData.category);
+    formData.append("userEmail", productData.userEmail); // Send userEmail to backend
+
+    productData.images.forEach((image) => {
+      formData.append("images", image);
     });
 
-    const [error, setError] = useState("");
+    // Log FormData entries
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
 
-    const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-
-        if (type === "file") {
-            setFormData({
-                ...formData,
-                [name]: files[0], 
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
+    try {
+      const response = await fetch(
+        "hhttp://locallost:8080/createProduct",
+        {
+          method: "POST",
+          body: formData,
         }
-    };
+      );
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        const { productName, productDescription, productPrice, productImage } = formData;
-        
-
-        if (!productName || !productDescription || !productPrice || !productImage) {
-            setError('All fields are required');
-            return;
-        } else {
-            setError('');
-        }
-
+      if (response.ok) {
         alert("Product added successfully!");
+        setProductData({
+          name: "",
+          description: "",
+          price: "",
+          category: "",
+          images: [],
+          userEmail: "",
+        });
+      } else {
+        alert("Failed to add product");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error adding product");
+    }
+  };
 
-        console.log(formData)
-    };
-
-    const containerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-        padding: "20px",
-        boxSizing: "border-box",
-    };
-
-    const formStyle = {
-        width: "100%",
-        maxWidth: "360px",
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    };
-
-    const headingStyle = {
-        textAlign: "center",
-        marginBottom: "20px",
-        fontSize: "24px",
-        fontWeight: "bold",
-        color: "#333",
-    };
-
-    const inputContainerStyle = {
-        marginBottom: "15px",
-    };
-
-    const inputStyle = {
-        width: "100%",
-        maxWidth: "300px",
-        padding: "10px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        fontSize: "16px",
-    };
-
-    const labelStyle = {
-        marginBottom: "5px",
-        display: "block",
-        fontWeight: "bold",
-        color: "#555",
-    };
-
-    const errorStyle = {
-        color: "red",
-        marginBottom: "15px",
-        fontSize: "14px",
-    };
-
-    const buttonStyle = {
-        padding: "12px",
-        width: "100%",
-        backgroundColor: "#007bff",
-        color: "#fff",
-        border: "none",
-        borderRadius: "5px",
-        fontSize: "16px",
-        cursor: "pointer",
-        textAlign: "center",
-    };
-
-    return (
-        <div style={containerStyle}>
-            <form style={formStyle} onSubmit={handleSubmit}>
-                <h2 style={headingStyle}>Add Product</h2>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productName">
-                        Product Name:
-                    </label>
-                    <input
-                        type="text"
-                        id="productName"
-                        name="productName"
-                        value={formData.productName}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productDescription">
-                        Product Description:
-                    </label>
-                    <input
-                        type="text"
-                        id="productDescription"
-                        name="productDescription"
-                        value={formData.productDescription}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productPrice">
-                        Product Price:
-                    </label>
-                    <input
-                        type="text"
-                        id="productPrice"
-                        name="productPrice"
-                        value={formData.productPrice}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productImage">
-                        Product Image:
-                    </label>
-                    <input
-                        type="file"
-                        id="productImage"
-                        name="productImage"
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                {error && <p style={errorStyle}>{error}</p>}
-                <button type="submit" style={buttonStyle}>
-                    Add Product
-                </button>
-            </form>
+  return (
+    <div className="max-w-3xl mx-auto mt-10 p-4 border rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium">Product Name</label>
+          <input
+            type="text"
+            name="name"
+            value={productData.name}
+            onChange={handleInputChange}
+            className="w-full border rounded p-2"
+            required
+          />
         </div>
-    );
+        <div>
+          <label className="block text-sm font-medium">Description</label>
+          <textarea
+            name="description"
+            value={productData.description}
+            onChange={handleInputChange}
+            className="w-full border rounded p-2"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Price</label>
+          <input
+            type="number"
+            name="price"
+            value={productData.price}
+            onChange={handleInputChange}
+            className="w-full border rounded p-2"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Category</label>
+          <input
+            type="text"
+            name="category"
+            value={productData.category}
+            onChange={handleInputChange}
+            className="w-full border rounded p-2"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">User Email</label>
+          <input
+            type="email"
+            name="userEmail"
+            value={productData.userEmail}
+            onChange={handleInputChange}
+            className="w-full border rounded p-2"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Upload Images</label>
+          <input
+            type="file"
+            name="images"
+            onChange={handleFileChange}
+            multiple
+            className="w-full border rounded p-2"
+          />
+        </div>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded shadow"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default ProductForm;

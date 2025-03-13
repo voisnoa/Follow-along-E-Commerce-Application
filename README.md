@@ -187,5 +187,131 @@ This milestone is to write the cart schema to store products and to create an en
 3. Show address section with an "Add Address" button.  
 4. If no address is found, display "No address found."  
 
+## Milestone 21: Address Form Page  
+
+### Learning Goals  
+- Create a form to collect address details.  
+- Store input values using React state.  
+- Navigate to the form when "Add Address" is clicked.  
+
+### Steps  
+1. **Create Address Form Page** – Add fields for country, city, address1, address2, zip code, and address type.  
+2. **Manage State** – Store input values using state.  
+3. **Navigation** – Clicking "Add Address" in the profile page should open this form.  
+
+
+## Milestone 22: Save Address in Database  
+
+### Learning Goals  
+- Create a backend endpoint to store the address in the user profile.  
+
+### Steps  
+1. **Create Backend Endpoint** – Receive address data from the frontend form.  
+2. **Update User Collection** – Add the address to the address array inside the user collection.  
+
+## Milestone 23: Select Address & Order Schema  
+
+### Learning Goals  
+- Add a "Place Order" button in the cart.  
+- Create a select address page in the frontend.  
+- Write an order schema in the backend.  
+
+### Steps  
+1. **Add Place Order Button** – Inside the cart page, navigate to the select address page when clicked.  
+2. **Create Select Address Page** – Display all saved addresses and allow the user to choose one.  
+3. **Backend Endpoint** – Create an endpoint to fetch all addresses of the user.  
+4. **Write Order Schema** – Define a schema in Mongoose to store order details.  
+
+# Milestone 24: Select Address Page  
+
+## Learning Goals  
+- Fetch and display saved addresses.  
+- Allow users to select a delivery address.  
+- Integrate address selection with order placement.  
+
+## Steps  
+1. **Fetch Addresses** – Get user addresses using `/api/v1/profile/getProfile`.  
+2. **Display Addresses** – Show addresses with radio buttons for selection.  
+3. **Confirm Selection** – Add a "Confirm Address" button to proceed to order confirmation.  
+
+---
+
+# Milestone 25: Order Confirmation Page  
+
+## Learning Goals  
+- Show selected address and cart details.  
+- Provide an option to place an order.  
+
+## Steps  
+1. **Fetch Cart Items** – Display cart products using `/getCart`.  
+2. **Show Address** – Display the selected delivery address.  
+3. **Place Order** – Add a "Place Order" button to send order data to `/api/v1/orders/create`.  
+
+---
+
+# Milestone 26: Fetch User Orders  
+
+## Learning Goals  
+- Retrieve user orders using email.  
+- Display past orders in the frontend.  
+
+## Steps  
+1. **Backend Update** – Modify `/api/v1/orders/user-orders` to accept `userEmail`.  
+2. **Fetch Orders** – Retrieve orders using `_id` mapped from `userEmail`.  
+3. **Sort & Display** – Sort orders by `createdAt` and populate product details.  
+
+---
+
+# Milestone 27: My Orders Page  
+
+## Learning Goals  
+- Show order history for users.  
+- Provide easy access to past orders.  
+
+## Steps  
+1. **Create MyOrders Page** – Fetch and display user orders.  
+2. **Navigation** – Add a "My Orders" link in the navbar.  
+3. **Improve UI** – Show order status, date, and total amount.  
+
+---
+
+# Milestone 28: Order Cancellation  
+
+## Learning Goals  
+- Allow users to cancel orders.  
+- Update order status dynamically.  
+
+## Steps  
+1. **Update MyOrders Page** – Add a "Cancel Order" button for eligible orders.  
+2. **Create Backend Endpoint** – Add `PUT /api/v1/orders/cancel/:orderId`.  
+3. **Update Status** – Change order status to "Cancelled" upon request.  
+
+---
+
+# Milestone 29: Payment Options Setup  
+
+## Learning Goals  
+- Prepare for payment integration.  
+- Navigate users to a payment options page.  
+
+## Steps  
+1. **Modify Order Confirmation** – Navigate to `/payment-options` on "Place Order".  
+2. **Pass Order Details** – Send cart items, subtotal, and address to the payment page.  
+3. **Prepare UI** – Add radio buttons for "Cash on Delivery" and "Online Payment".  
+
+---
+
+# Milestone 30: Payment Integration  
+
+## Learning Goals  
+- Implement PayPal payment integration.  
+- Support multiple payment methods.  
+
+## Steps  
+1. **Create PaymentOptions Page** – Show payment choices to users.  
+2. **Integrate PayPal** – Use `@paypal/react-paypal-js` for online payments.  
+3. **Save Order on Success** – Call `/api/v1/orders/create` after successful payment.  
+4. **Redirect on Completion** – Navigate to `/order-success` after order placement.  
+
 
 

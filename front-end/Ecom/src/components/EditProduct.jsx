@@ -1,183 +1,91 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-const EditProduct = () => {
-    const [formData, setFormData] = useState({
-        productName: "",
-        productDescription: "",
-        productPrice: "",
-        productImage: null, 
-    });
+const EditProductForm = ({ product, onUpdate, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    category: product.category,
+  });
 
-    const [error, setError] = useState("");
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-
-        if (type === "file") {
-            setFormData({
-                ...formData,
-                [name]: files[0], 
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `hhttp://locallost:8080/updateProduct/${product._id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         }
-    };
+      );
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        const { productName, productDescription, productPrice, productImage } = formData;
-        
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        onUpdate(updatedProduct); // Update UI
+        onCancel(); // Close form
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
 
-        if (!productName || !productDescription || !productPrice || !productImage) {
-            setError('All fields are required');
-            return;
-        } else {
-            setError('');
-        }
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-bold mb-4">Edit Product</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-2 border rounded mb-2"
+          />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full p-2 border rounded mb-2"
+          />
+          <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            className="w-full p-2 border rounded mb-2"
+          />
+          <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="w-full p-2 border rounded mb-2"
+          />
 
-        alert("Product added successfully!");
-
-        console.log(formData)
-    };
-
-    const containerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f5f5f5",
-        padding: "20px",
-        boxSizing: "border-box",
-    };
-
-    const formStyle = {
-        width: "100%",
-        maxWidth: "360px",
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    };
-
-    const headingStyle = {
-        textAlign: "center",
-        marginBottom: "20px",
-        fontSize: "24px",
-        fontWeight: "bold",
-        color: "#333",
-    };
-
-    const inputContainerStyle = {
-        marginBottom: "15px",
-    };
-
-    const inputStyle = {
-        width: "100%",
-        maxWidth: "300px",
-        padding: "10px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        fontSize: "16px",
-    };
-
-    const labelStyle = {
-        marginBottom: "5px",
-        display: "block",
-        fontWeight: "bold",
-        color: "#555",
-    };
-
-    const errorStyle = {
-        color: "red",
-        marginBottom: "15px",
-        fontSize: "14px",
-    };
-
-    const buttonStyle = {
-        padding: "12px",
-        width: "100%",
-        backgroundColor: "#007bff",
-        color: "#fff",
-        border: "none",
-        borderRadius: "5px",
-        fontSize: "16px",
-        cursor: "pointer",
-        textAlign: "center",
-    };
-
-    const {id}=useParams();
-
-    useEffect(() => {
-        fetch(`http://localhost:5000/product/${id}`)
-    },[])
-
-    return (
-        <div style={containerStyle}>
-            <form style={formStyle} onSubmit={handleSubmit}>
-                <h2 style={headingStyle}>Update Product</h2>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productName">
-                        Product Name:
-                    </label>
-                    <input
-                        type="text"
-                        id="productName"
-                        name="productName"
-                        value={formData.productName}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productDescription">
-                        Product Description:
-                    </label>
-                    <input
-                        type="text"
-                        id="productDescription"
-                        name="productDescription"
-                        value={formData.productDescription}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productPrice">
-                        Product Price:
-                    </label>
-                    <input
-                        type="text"
-                        id="productPrice"
-                        name="productPrice"
-                        value={formData.productPrice}
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={inputContainerStyle}>
-                    <label style={labelStyle} htmlFor="productImage">
-                        Product Image:
-                    </label>
-                    <input
-                        type="file"
-                        id="productImage"
-                        name="productImage"
-                        onChange={handleChange}
-                        style={inputStyle}
-                    />
-                </div>
-                {error && <p style={errorStyle}>{error}</p>}
-                <button type="submit" style={buttonStyle}>
-                    Add Product
-                </button>
-            </form>
-        </div>
-    );
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={onCancel}
+              className="bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
-export default EditProduct;
+export default EditProductForm;

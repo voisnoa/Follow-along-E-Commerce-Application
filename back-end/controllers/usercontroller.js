@@ -1,4 +1,5 @@
-const User = require('../model/user.model');
+
+const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -7,13 +8,13 @@ const createUser = async (req, res) => {
         const { name, email, password } = req.body;
 
         // Check if the user already exists
-        const existingUser = await User.findOne({ email: req.body.email });
+        const existingUser = await user.findOne({ email });
         if (existingUser) {
             return res.status(409).send({ error: 'User already exists' });
-        }
+        }   
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = new User({ name, email, password: hashedPassword });
+        const newUser = new user({ name, email, password: hashedPassword });
         await newUser.save();
         res.status(201).send({ message: 'User created successfully', user: newUser });
     } catch (error) {
@@ -26,7 +27,7 @@ const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const existingUser = await User.findOne({ email });
+        const existingUser = await user.findOne({ email });
         if (!existingUser) {
             return res.status(404).json({ error: "User not found" });
         }
@@ -36,7 +37,7 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: "Invalid password" });
         }
 
-        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+        const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET);
 
         res.status(200).json({ message: "Login successful", email, token });
     } catch (error) {
@@ -45,49 +46,45 @@ const loginUser = async (req, res) => {
     }
 };
 
+
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await user.find();
         res.status(200).send(users);
     } catch (error) {
         res.status(500).send({ error: 'Error fetching users' });
     }
 };
 
-const getUserById = async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const userData = await User.findById(userId);
-        if (!userData) {
-            return res.status(404).send({ error: 'User not found' });
-        }
-        res.status(200).send(userData);
-    } catch (error) {
-        res.status(500).send({ error: 'Error fetching user data' });
-    }
-};
-
 const getUserByEmail = async (req, res) => {
     try {
-        const  userEmail  = req.query.email;
+        const { userEmail } = req.query;
+
+        // Check if userEmail is provided
         if (!userEmail) {
-            return res.status(400).send({ error: 'Email is required' });
+            return res.status(400).json({ error: 'Email is required' });
         }
 
-        const userData = await User.findOne({ email: userEmail });
-        if (!userData) {
-            return res.status(404).send({ error: 'User not found' });
+        // Find user by email (assuming 'user' is your MongoDB model)
+        const thisUser = await user.findOne({ email: userEmail });
+
+        // If no user is found, return a 404
+        if (!thisUser) {
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        res.status(200).send({
-            name: userData.name,
-            email: userData.email,
-            _id: userData._id
-        });
+        // Return name, email, and _id
+        const userData = {
+            name: thisUser.name,
+            email: thisUser.email,
+            _id: thisUser._id, // Add the _id to the response
+        };
+
+        res.status(200).json(userData);
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ error: 'Error fetching user data' });
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'Error fetching users' });
     }
 };
 
-module.exports = { createUser, loginUser, getUsers, getUserById, getUserByEmail };
+module.exports = { createUser, loginUser, getUsers,getUserByEmail };

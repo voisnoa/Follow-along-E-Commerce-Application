@@ -6,7 +6,7 @@ router.post("/addToCart/:productId", async (req, res) => {
     try {
       const { quantity } = req.body;
       const productId = req.params.productId;
-      const userEmail = req.body.userEmail; // Get userEmail from request body
+      const userEmail = req.body.userEmail; 
   
       if (!userEmail) {
         return res.status(400).json({ message: "User email is required" });
@@ -36,7 +36,7 @@ router.post("/addToCart/:productId", async (req, res) => {
     
 router.get("/getCart", async (req, res) => {
     try {
-      const userEmail = req.query.userEmail; // Get email from query params
+      const userEmail = req.query.userEmail; 
   
       if (!userEmail) {
         return res.status(400).json({ message: "User email is required" });
