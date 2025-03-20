@@ -313,5 +313,15 @@ This milestone is to write the cart schema to store products and to create an en
 3. **Save Order on Success** – Call `/api/v1/orders/create` after successful payment.  
 4. **Redirect on Completion** – Navigate to `/order-success` after order placement.  
 
+## **Milestone 34: Cookie-Based Authentication Setup**
+
+## **1️⃣ Backend Setup**
+
+- ✅ **Created Authentication Middleware**: Added `authenticateToken` middleware in `server/middleware/auth.js` to validate the `authToken` cookie using `jsonwebtoken`, attaching decoded user data (email, id) to `req.user`.
+- ✅ **Updated Login to Set Cookie**: Modified `loginUser` in `userController.js` to set the `authToken` cookie with `httpOnly: true`, `maxAge: 3600000` (1 hour), `secure: false` (local testing), and `sameSite: "none"` to handle cross-site requests.
+- ✅ **Protected Routes**: Applied `authenticateToken` middleware to routes like `/api/getCart` (routes/cart.js) and `/api/v1/profile/getProfile` (routes/profile.js) to ensure only authenticated users can access them.
+- ✅ **Profile Feature Implementation**: Updated `profileController.js` to use `req.user.id` for fetching or creating profiles, eliminating the need for query parameters in `/getProfile` and `/create` endpoints.
+- ✅ **Server Configuration**: Added `cookie-parser` middleware in `server.js` and configured CORS with `credentials: true` to allow cookie transmission.
+
 
 
