@@ -315,13 +315,32 @@ This milestone is to write the cart schema to store products and to create an en
 
 ## **Milestone 34: Cookie-Based Authentication Setup**
 
-## **1️⃣ Backend Setup**
+## Learning Goals  
+- Extract JWT token from browser cookies.  
+- Validate the token in the backend using middleware.  
+- Secure routes to prevent unauthorized access.  
 
-- ✅ **Created Authentication Middleware**: Added `authenticateToken` middleware in `server/middleware/auth.js` to validate the `authToken` cookie using `jsonwebtoken`, attaching decoded user data (email, id) to `req.user`.
-- ✅ **Updated Login to Set Cookie**: Modified `loginUser` in `userController.js` to set the `authToken` cookie with `httpOnly: true`, `maxAge: 3600000` (1 hour), `secure: false` (local testing), and `sameSite: "none"` to handle cross-site requests.
-- ✅ **Protected Routes**: Applied `authenticateToken` middleware to routes like `/api/getCart` (routes/cart.js) and `/api/v1/profile/getProfile` (routes/profile.js) to ensure only authenticated users can access them.
-- ✅ **Profile Feature Implementation**: Updated `profileController.js` to use `req.user.id` for fetching or creating profiles, eliminating the need for query parameters in `/getProfile` and `/create` endpoints.
-- ✅ **Server Configuration**: Added `cookie-parser` middleware in `server.js` and configured CORS with `credentials: true` to allow cookie transmission.
+## Steps  
+1. **Get Token from Cookie** – Retrieve the JWT token stored in the browser cookie.  
+2. **Send Token to Backend** – Pass the token along with API requests for validation.  
+3. **Create Middleware** – Write backend middleware to verify the token’s validity.  
+4. **Secure Routes** – Apply the middleware to protected routes and pages.  
+5. **Test the Flow** – Ensure users cannot access protected pages without a valid login. 
+
+# Milestone 35: Project Deployment 🚀
+
+## Learning Goals  
+- Deploy your frontend application.  
+- Deploy your backend server.  
+- Connect both frontend and backend after deployment.  
+
+## Steps  
+1. **Deploy Backend** – Host your backend on any deployment service and get the backend deployment link.  
+2. **Update Frontend API URL** – Replace `localhost` in your frontend with the deployed backend URL.  
+3. **Deploy Frontend** – Host your frontend on any deployment service.  
+4. **Test the Application** – Ensure both frontend and backend are properly deployed and working together.  
+
+
 
 
 
