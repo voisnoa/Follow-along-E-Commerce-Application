@@ -41,7 +41,7 @@ const ProductForm = () => {
 
     try {
       const response = await fetch(
-        "hhttp://locallost:8080/createProduct",
+        "http://localhost:8080/createProduct",
         {
           method: "POST",
           body: formData,

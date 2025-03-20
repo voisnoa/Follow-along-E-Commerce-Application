@@ -12,7 +12,7 @@ const EditProductPage = () => {
   });
 
   useEffect(() => {
-    fetch(`hhttp://locallost:8080/getProduct/${id}`) // Fetch product details
+    fetch(`http://localhost:8080/getProduct/${id}`) // Fetch product details
       .then((res) => res.json())
       .then((data) => setFormData(data))
       .catch((err) => console.error("Error fetching product:", err));
@@ -26,7 +26,7 @@ const EditProductPage = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `hhttp://locallost:8080/updateProduct/${id}`,
+        `http://localhost:8080/updateProduct/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -47,7 +47,7 @@ const EditProductPage = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         const response = await fetch(
-          `hhttp://locallost:8080/deleteProduct/${id}`,
+          `http://localhost:8080/deleteProduct/${id}`,
           {
             method: "DELETE",
             headers: {

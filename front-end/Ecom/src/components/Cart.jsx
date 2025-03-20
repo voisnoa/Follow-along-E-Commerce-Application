@@ -32,7 +32,7 @@ function CartPage() {
 
       try {
         const response = await fetch(
-          `hhttp://locallost:8080/getCart?userEmail=${userEmail}`
+          `http://localhost:8080/getCart?userEmail=${userEmail}`
         );
 
         if (!response.ok) {
@@ -63,7 +63,7 @@ function CartPage() {
 
     try {
       const response = await fetch(
-        "hhttp://locallost:8080/updateCart",
+        "http://localhost:8080/updateCart",
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -102,7 +102,7 @@ function CartPage() {
   const handleRemoveItem = async (productId) => {
     try {
       const response = await fetch(
-        "hhttp://locallost:8080/removeFromCart",
+        "http://localhost:8080/removeFromCart",
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

@@ -24,7 +24,7 @@ const MyOrders = () => {
 
       // Step 1: Fetch user _id by email using /getUserByEmail
       const userResponse = await fetch(
-        `hhttp://locallost:8080/getUserByEmail?userEmail=${encodeURIComponent(
+        `http://localhost:8080/getUserByEmail?userEmail=${encodeURIComponent(
           userEmail
         )}`,
         {
@@ -43,7 +43,7 @@ const MyOrders = () => {
 
       // Step 2: Fetch orders using the user _id via /api/v1/orders/user-orders
       const ordersResponse = await fetch(
-        `hhttp://locallost:8080/api/v1/orders/user-orders?userId=${userId}`,
+        `http://localhost:8080/api/v1/orders/user-orders?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -72,7 +72,7 @@ const MyOrders = () => {
   const handleCancelOrder = async (orderId) => {
     try {
       const response = await fetch(
-        `hhttp://locallost:8080/api/v1/orders/cancel/${orderId}`,
+        `http://localhost:8080/api/v1/orders/cancel/${orderId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

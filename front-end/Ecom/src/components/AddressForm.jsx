@@ -22,7 +22,7 @@ const SelectAddress = () => {
     try {
       console.log("Fetching addresses for userEmail:", userEmail);
       const userResponse = await fetch(
-        `hhttp://locallost:8080/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `http://localhost:8080/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const SelectAddress = () => {
       const userId = userData._id;
 
       const profileResponse = await fetch(
-        `hhttp://locallost:8080/api/v1/profile/getProfile?userId=${userId}`,
+        `http://localhost:8080/api/v1/profile/getProfile?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

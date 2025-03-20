@@ -24,7 +24,7 @@ const PaymentOptions = () => {
   const placeOrder = async () => {
     try {
       const userResponse = await fetch(
-        `hhttp://locallost:8080/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `http://localhost:8080/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
       const userData = await userResponse.json();
@@ -33,7 +33,7 @@ const PaymentOptions = () => {
       if (!userResponse.ok) throw new Error(userData.error || "Failed to fetch user data");
 
       const orderResponse = await fetch(
-        `hhttp://locallost:8080/api/v1/orders/create`,
+        `http://localhost:8080/api/v1/orders/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

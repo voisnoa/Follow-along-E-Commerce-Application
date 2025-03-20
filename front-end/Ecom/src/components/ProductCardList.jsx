@@ -10,7 +10,7 @@ const ProductCardList = () => {
   useEffect(() => {
     if (!userEmail) return;
 
-    fetch(`hhttp://locallost:8080/getProducts?email=${userEmail}`)
+    fetch(`http://localhost:8080/getProducts?email=${userEmail}`)
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));

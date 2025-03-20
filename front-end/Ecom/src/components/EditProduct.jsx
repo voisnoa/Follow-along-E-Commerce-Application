@@ -16,7 +16,7 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `hhttp://locallost:8080/updateProduct/${product._id}`,
+        `http://localhost:8080/updateProduct/${product._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
