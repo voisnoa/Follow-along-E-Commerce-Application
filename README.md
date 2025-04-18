@@ -313,32 +313,42 @@ This milestone is to write the cart schema to store products and to create an en
 3. **Save Order on Success** – Call `/api/v1/orders/create` after successful payment.  
 4. **Redirect on Completion** – Navigate to `/order-success` after order placement.  
 
-## **Milestone 34: Cookie-Based Authentication Setup**
 
-## Learning Goals  
-- Extract JWT token from browser cookies.  
-- Validate the token in the backend using middleware.  
-- Secure routes to prevent unauthorized access.  
+# **Milestone 31: Progress Summary**
 
-## Steps  
-1. **Get Token from Cookie** – Retrieve the JWT token stored in the browser cookie.  
-2. **Send Token to Backend** – Pass the token along with API requests for validation.  
-3. **Create Middleware** – Write backend middleware to verify the token’s validity.  
-4. **Secure Routes** – Apply the middleware to protected routes and pages.  
-5. **Test the Flow** – Ensure users cannot access protected pages without a valid login. 
+## **1️⃣ Frontend Setup**
 
-# Milestone 35: Project Deployment 🚀
+- ✅ **Redux Installation**: Installed the `react-redux` npm package for global state management.
+- ✅ **Store Folder Creation**: Created a `store` folder in the `client` directory with `store.js` and `userActions.js` files.
+- ✅ **Global State Configuration**: Configured a Redux store in `store.js` with a `userReducer` to manage the user’s email state.
+- ✅ **Action Creator**: Defined a `setEmail` function in `userActions.js` to update the email in the global state.
+- ✅ **Provider Integration**: Wrapped the `App` component with the `Provider` component in `main.jsx`, passing the store as a prop.
 
-## Learning Goals  
-- Deploy your frontend application.  
-- Deploy your backend server.  
-- Connect both frontend and backend after deployment.  
+## **2️⃣ Backend Setup**
 
-## Steps  
-1. **Deploy Backend** – Host your backend on any deployment service and get the backend deployment link.  
-2. **Update Frontend API URL** – Replace `localhost` in your frontend with the deployed backend URL.  
-3. **Deploy Frontend** – Host your frontend on any deployment service.  
-4. **Test the Application** – Ensure both frontend and backend are properly deployed and working together.  
+- ✅ **No Changes**: Leveraged existing frontend structure without backend modifications.
+
+## **3️⃣ Key Achievements**
+
+- Successfully set up Redux to manage the user’s email as a global state, accessible across components like `OrderConfirmation`, `PaymentOptions`, and `MyOrders`.
+- Established a foundation for centralized state management in the e-commerce application.
+
+# **Milestone 32: Progress Summary**
+
+## **1️⃣ Frontend Setup**
+
+- ✅ **Dispatch Email in Login**: Updated the `Login` page to use `useDispatch` from `react-redux` to dispatch the `setEmail` action, storing the user’s email in the global state after a successful login.
+- ✅ **Access Email with useSelector**: Modified `OrderConfirmation`, `PaymentOptions`, and `MyOrders` pages to access the user’s email from the Redux store using `useSelector`, replacing previous methods (`localStorage`, URL params, or navigation state).
+- ✅ **Removed Redundant Email Storage**: Removed `localStorage` usage for storing the email in `Login` and other pages, relying entirely on Redux for email management.
+
+## **2️⃣ Backend Setup**
+
+- ✅ **No Changes**: Leveraged existing endpoints (`/login`, `/getCart`, `/getUserByEmail`, `/api/v1/orders/create`) without modifications.
+
+## **3️⃣ Key Achievements**
+
+- Successfully used Redux to store and access the user’s email across the application, ensuring consistent state management.
+- Eliminated dependency on `localStorage` and URL params for email access, improving security and maintainability.
 
 
 
